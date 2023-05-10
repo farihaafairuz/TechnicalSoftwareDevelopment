@@ -1,0 +1,13 @@
+VoterID,Name,Age,Suburb,Status
+1,Jane Smith,28,Carlton,Unvoted
+2,Karen Lee,30,Docklands,Voted
+3,Sarah Chen,45,Parkville,Voted
+4,Tom Davis,37,Hawthorne,Voted
+5,Amy Brown,22,Flemington,Unvoted
+6,Jack Wilson,33,Fitzroy,Voted
+7,Emily Li,29,Richmond,Voted
+8,Max Taylor,41,Ivanhoe,Unvoted
+9,Julia Wang,27,Coburg,Voted
+10,Chris Jones,39,Bundoora,Voted
+11,Grace Kim,31,Camberwell,Unvoted
+12,Luke Miller,36,Kew,Voted

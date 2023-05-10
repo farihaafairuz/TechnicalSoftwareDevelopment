@@ -1,0 +1,13 @@
+Symbol,Name,Age,Suburb,Count
+ABC,John Smith,35,Carlton,120
+DEF,Sarah Brown,42,Docklands,80
+GHI,David Lee,28,Parkville,50
+JKL,Amy Davis,31,Hawthorne,60
+MNO,Michael Wilson,45,Flemington,90
+PQR,Emily Jones,26,Fitzroy,40
+STU,Jack Taylor,39,Richmond,70
+VWX,Samantha Kim,33,Ivanhoe,55
+YZA,Max Chen,29,Coburg,35
+BCD,Julia Wang,24,Bundoora,65
+EFG,Chris Johnson,37,Camberwell,50
+HIJ,Grace Lee,41,Kew,75
