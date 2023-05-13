@@ -154,8 +154,6 @@ int main() {
           //   break;
                 //
           // case 'Q':
-          //   write_voters_to_file();
-          //   write_candidates_to_file();
           //   exit(0);
 
           default:
