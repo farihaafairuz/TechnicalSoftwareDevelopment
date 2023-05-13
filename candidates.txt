@@ -1,4 +1,3 @@
-Symbol,Name,Age,Suburb,Count
 ABC,John Smith,35,Carlton,120
 DEF,Sarah Brown,42,Docklands,80
 GHI,David Lee,28,Parkville,50

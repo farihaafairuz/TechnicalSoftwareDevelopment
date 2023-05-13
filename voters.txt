@@ -1,4 +1,3 @@
-VoterID,Name,Age,Suburb,Status
 1,Jane Smith,28,Carlton,Unvoted
 2,Karen Lee,30,Docklands,Voted
 3,Sarah Chen,45,Parkville,Voted
