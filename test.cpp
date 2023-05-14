@@ -1,9 +1,11 @@
 //test file
 
-#include <iostream>
+#include <iostream>//header file for lots of C++ functions
 #include <fstream>//libary for opening external files with ifstream and ofstream
-#include <sstream>
+#include <sstream>//header file for classes
 #include <cstdlib>//needed for closing the external files
+#include <string>//header file for using strings
+#include <vector>//header file for vector
 using namespace std;
 
 //const string VOTER_FILE = "voters.txt";
@@ -34,12 +36,13 @@ vector<vector<string>> read_voters_from_file() {
 
     voters_file.close();
     
-//    for (auto row : voters) {
-//            for (auto field : row) {
-//                cout << field << " ";
-//            }
-//            cout << endl;
-//    }
+/*    for (auto row : voters) {
+            for (auto field : row) {
+               cout << field << " ";
+            }
+            cout << endl;
+    }
+*/
     
     return voters;
 }
@@ -69,12 +72,13 @@ vector<vector<string>> read_candidates_from_file() {
 
     candidates_file.close();
 
-//    for (auto row : candidates) {
-//            for (auto field : row) {
-//                cout << field << " ";
-//            }
-//            cout << endl;
-//    }
+/*    for (auto row : candidates) {
+            for (auto field : row) {
+                cout << field << " ";
+            }
+            cout << endl;
+    }
+*/
 
     return candidates;
 }
@@ -100,7 +104,7 @@ char menu() {
   if (selected != 'P' && selected != 'A' && selected != 'S' && selected != 'L' && selected != 'Q') {
     cout << "Unknown Selection, Please Try Again\n" << endl;
     menu();
-        }
+    }
 
   return selected;
 }
@@ -132,11 +136,11 @@ int main() {
     voters = read_voters_from_file();
     candidates = read_candidates_from_file();
 
-  while (true) {
+    while (true) {
       char selected;
       selected = menu();
 
-      switch (selected) {
+        switch (selected) {
           case 'P':
               print_candidate_numbers(candidates);
               break;
@@ -155,10 +159,13 @@ int main() {
                 //
           // case 'Q':
           //   exit(0);
-
+            
+    
           default:
-            menu();
-      }
-  }
+        }
+    }
+        menu();
+    
+
 
 }
