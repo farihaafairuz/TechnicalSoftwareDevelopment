@@ -28,54 +28,101 @@ vector<vector<string>> read_voters_from_file() {
     vector<vector<string>> voters = {};
     string voter_line;
 
-    ifstream voters_file;
-    voters_file.open("voters.txt");
+    ifstream voters_file("voters.txt");
 
-    if (voters_file.fail()) {
+    if (!voters_file.is_open()) {
         cout << "File open failed." << endl;
     }
     while (getline(voters_file, voter_line)) {
-        stringstream ss(voter_line);
-        vector<string> row = {};
-        string voter_data;
+        if (!voter_line.empty()) {
+            stringstream ss(voter_line);
+            vector<string> row = {};
+            string voter_data;
 
-        while (getline(ss, voter_data, ',')) {
-            row.push_back(voter_data);
+            while (getline(ss, voter_data, ',')) {
+                row.push_back(voter_data);
+            }
+            voters.push_back(row);
         }
-        voters.push_back(row);
     }
     voters_file.close();
     return voters;
 }
+
+
+
 //read the text file candidates.txt
 vector<vector<string>> read_candidates_from_file() {
-    vector<vector<string>> candidates;
-    ifstream file("candidates.txt");
+    vector<vector<string>> candidates = {};
+    string candidate_line;
 
-    if (file.fail()) {
+    ifstream candidates_file("candidates.txt");
+
+    if (!candidates_file.is_open()) {
         cout << "File open failed." << endl;
-        return candidates;
     }
 
-    string line;
-    while (getline(file, line)) {
-        stringstream ss(line);
-        vector<string> candidate;
-        string temp;
-        while (getline(ss, temp, ',')) {
-            candidate.push_back(temp);
+    while (getline(candidates_file, candidate_line)) {
+        if (!candidate_line.empty()) {
+            stringstream ss(candidate_line);
+            vector<string> row = {};
+            string candidate_data;
+
+            while (getline(ss, candidate_data, ',')) {
+                row.push_back(candidate_data);
+            }
+
+            candidates.push_back(row);
         }
-        candidates.push_back(candidate);
     }
+
+    candidates_file.close();
     return candidates;
 }
+
+
+
+
 // print read candidates
-void print_candidates(vector<vector<string>> candidates) {
-    for (int i = 0; i < candidates.size(); i++) {
-        cout << "Candidate " << i + 1 << ": " << candidates[i][1] << endl;
-        cout << "Votes: " << candidates[i][4] << endl << endl;
+void print_candidate_numbers(vector<vector<string>> candidates)
+{
+    int selected;
+    string candidate_info;
+
+    cout << "Enter candidate ID (1 - " << candidates.size() << "): ";
+    cin >> selected;
+    cout << endl;
+
+    while (selected < 1 || selected > candidates.size())
+    {
+        cout << "Please enter a candidate ID between 1 and " << candidates.size() << ".\n";
+        cout << "Enter candidate ID (1 - " << candidates.size() << "): ";
+        cin >> selected;
+        cout << endl;
+    }
+
+    cout << "Candidate " << selected << ": " << candidates[selected - 1][1] << endl;
+    cout << "Votes: " << candidates[selected - 1][4] << endl << endl;
+}
+
+
+void print_all_candidates(vector<vector<string>> candidates) {
+    cout << "##### Electoral Commission - Candidates #####" << endl;
+    int i = 1;
+    for (auto row : candidates) {
+        cout << "Candidate ID: " << i << " -> ";
+        for (auto field : row) {
+            
+            
+            cout << field << " ";
+            
+        }
+        i++;
+        cout << endl;
     }
 }
+
+
 //write the text file candidates.txt
 void write_candidates_to_file(vector<vector<string>> candidates) {
     ofstream file("candidates.txt");
@@ -93,7 +140,10 @@ void write_candidates_to_file(vector<vector<string>> candidates) {
         }
         file << endl;
     }
+    
+    file.close();
 }
+
 //display smallest number of votes
 void display_smallest_number_of_votes(vector<vector<string>> candidates) {
     int smallest = stoi(candidates[0][4]);
@@ -106,62 +156,87 @@ void display_smallest_number_of_votes(vector<vector<string>> candidates) {
             candidate_name = candidates[i][1];
         }
     }
-    cout << "Candidate " << candidate_number << " " << candidate_name<< " has the smallest number of votes: " << smallest << endl;
+    cout << "Candidate " << candidate_number << " " << candidate_name<< " has the smallest number of votes: " << smallest << endl << endl;
 }
+
 // add votes to candidate
 vector<vector<string>> add_votes_to_candidate(vector<vector<string>> candidates) {
-    string candidate_number;
+    int candidate_number;
     int votes;
-    cout << "Enter the name of the candidate number: ";
+    
+    cout << "Enter candidate ID (1 - " << candidates.size() << "): ";
     cin >> candidate_number;
+
+    while (candidate_number < 1 || candidate_number > candidates.size())
+    {
+        cout << "Candidate not found.\nPlease enter a candidate ID between 1 and " << candidates.size() << ".\n";
+        cout << "Enter candidate ID (1 - " << candidates.size() << "): ";
+        cin >> candidate_number;
+        cout << endl;
+    }
+    
     cout << "Enter the number of votes to add: ";
     cin >> votes;
     cout << endl;
+    
+    int current_votes = stoi(candidates[candidate_number - 1][4]);
+    candidates[candidate_number -1 ][4] = to_string(current_votes + votes);
+    write_candidates_to_file(candidates);
+    
+    cout << "Added " << votes << " votes to " << candidates[candidate_number - 1 ][1] << endl;
+    cout << "Total votes for " << candidates[candidate_number -1 ][1] << ": " << candidates[candidate_number - 1][4] << endl;
+    cout << endl;
 
-    for (int i = 0; i < candidates.size(); i++) {
-        if (candidates[i][0] == candidate_number) {
-            int current_votes = stoi(candidates[i][4]);
-            candidates[i][4] = to_string(current_votes + votes);
-            cout << "Added " << votes << " votes to " << candidate_number<< endl;
-            write_candidates_to_file(candidates);
-            return candidates;
-        }
-        else{
-            cout << "Candidate not found." << endl;
-            return candidates;
-        }
-    }
     return candidates;
 }
+
+
 void selection(vector<vector<string>> candidates){
     char selected;
     cin >> selected;
     cout << endl;
     while (toupper(selected) != 'Q') {
         if (toupper(selected) == 'P') {
-          print_candidates(candidates);
-            cout << "P" << endl;
+            if (!candidates.empty()) {
+                print_candidate_numbers(candidates);
+            }
+            else {
+                cout << "The list is empty. No candidates.\n" << endl;
+            }
         }
         else if (toupper(selected) == 'A') {
-          candidates = add_votes_to_candidate(candidates);
-          cout << "A" << endl;
+            if (!candidates.empty()) {
+                candidates = add_votes_to_candidate(candidates);
+            }
+            else {
+                cout << "The list is empty. No candidates.\n" << endl;
+            }
         }
         else if (toupper(selected) == 'S') {
-          display_smallest_number_of_votes(candidates);
-            cout << "S" << endl;
+            if (!candidates.empty()) {
+                display_smallest_number_of_votes(candidates);
+            }
+            else {
+                cout << "The list is empty. No candidates.\n" << endl;
+            }
+          
         }
         else if (toupper(selected) == 'L') {
-//          display_largest_number_of_votes(candidates);
-            cout << "L" << endl;
+            if (!candidates.empty()) {
+//                display_largest_number_of_votes(candidates);
+            }
+            else {
+                cout << "The list is empty. No candidates.\n" << endl;
+            }
         }
         else {
-            cout << "Invalid option. Please try again." << endl;
+            cout << "Invalid option. Please try again.\n" << endl;
         }
         print_menu();
         cin >> selected;
         cout << endl;
     }
-    cout << "Goodbye!" << endl;
+    cout << "Goodbye!\n" << endl;
 }
 // Print Menu Options
 void print_menu() {
@@ -175,9 +250,14 @@ void print_menu() {
 }
 // Main Function
 int main(){
-    vector<vector<string>> candidates;
+    vector<vector<string>> voters = {}; //initialise vector
+    vector<vector<string>> candidates = {}; //initialise vector
+    
+    voters = read_voters_from_file();
     candidates = read_candidates_from_file();
-    print_candidates(candidates);
+    
+    print_all_candidates(candidates);
+    cout << endl;
     print_menu();
     selection(candidates);
 
