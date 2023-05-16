@@ -103,6 +103,8 @@ void print_candidate_numbers(vector<vector<string>> candidates)
 
     cout << "Candidate " << selected << ": " << candidates[selected - 1][1] << endl;
     cout << "Votes: " << candidates[selected - 1][4] << endl << endl;
+    cin.ignore();//used with cin.get() to add a pause until the user enters "enter" 
+    cin.get();//because the program would just go straight back to the "menu" without displaying the information clearly
 }
 
 
