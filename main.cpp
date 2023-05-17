@@ -103,9 +103,6 @@ void print_candidate_numbers(vector<vector<string>> candidates)
 
     cout << "Candidate " << selected << ": " << candidates[selected - 1][1] << endl;
     cout << "Votes: " << candidates[selected - 1][4] << endl << endl;
-    cin.ignore();//used with cin.get() to add a pause until the user enters "enter" 
-    cin.get();//because the program would display the "menu" making the desired output information above the menu 
-
 }
 
 
@@ -150,31 +147,28 @@ void write_candidates_to_file(vector<vector<string>> candidates) {
 //display smallest number of votes
 void display_smallest_number_of_votes(vector<vector<string>> candidates) {
     int smallest = stoi(candidates[0][4]);//stoi coverts string to interger
-    string candidate_number = candidates[0][0];
     string candidate_name = candidates[0][1];
     for (int i = 1; i < candidates.size(); i++) {
         if (stoi(candidates[i][4]) < smallest) {
             smallest = stoi(candidates[i][4]);
-            candidate_number = candidates[i][0];
             candidate_name = candidates[i][1];
         }
     }
-    cout << "Candidate " << candidate_number << " " << candidate_name<< " has the smallest number of votes: " << smallest << endl << endl;
+    cout << "Candidate " << candidate_name << " has the smallest number of votes: " << smallest << endl << endl;
 }
+
 //display largest number of votes
 void display_largest_number_of_votes(vector<vector<string>> candidates){
     int largest = stoi(candidates[0][4]);
-    string candidate_number = candidates[0][0];//declares the candidate number to be at [0][0] in the array of the candidate.txt file
     string candidate_name = candidates[0][1];//declares the candidate name to be at [0][1] in the array of the candidate.txt file
     for (int i = 1; i < candidates.size(); i++) {//for loop to cycle through candidate.txt file information
         if (stoi(candidates[i][4]) > largest) {
             largest = stoi(candidates[i][4]);
-            candidate_number = candidates[i][0];
             candidate_name = candidates[i][1];
         }
         
     }
-    cout<<"Candidate " <<candidate_number << " " << candidate_name << " has the largest number of votes: " << largest << endl << endl;
+    cout<<"Candidate " << candidate_name << " has the largest number of votes: " << largest << endl << endl;
 }
 
 // add votes to candidate
